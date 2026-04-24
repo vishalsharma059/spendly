@@ -17,7 +17,7 @@ import {
 import Link from 'next/link';
 
 const statCard = (icon: React.ReactNode, label: string, value: string, sub: string, color: string) => (
-  <div className="rounded-2xl p-5 space-y-4 card-hover"
+  <div className="min-w-0 rounded-2xl p-4 space-y-4 card-hover sm:p-5"
     style={{ background: 'rgb(15,15,18)', border: '1px solid rgb(28,28,35)' }}>
     <div className="flex items-center justify-between">
       <div className="w-10 h-10 rounded-xl flex items-center justify-center"
@@ -28,7 +28,7 @@ const statCard = (icon: React.ReactNode, label: string, value: string, sub: stri
     </div>
     <div>
       <div className="text-xs text-zinc-500 mb-1">{label}</div>
-      <div className="font-syne text-2xl font-bold text-white">{value}</div>
+      <div className="font-syne text-xl font-bold text-white break-words sm:text-2xl">{value}</div>
       <div className="text-xs text-zinc-600 mt-1">{sub}</div>
     </div>
   </div>
@@ -57,21 +57,21 @@ export default function DashboardPage() {
   const recentExpenses = expenses.slice(0, 5);
 
   return (
-    <div className="p-8 space-y-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between">
-        <div>
+    <div className="mx-auto max-w-7xl space-y-6 px-4 pb-6 sm:px-6 lg:space-y-8 lg:p-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
           <p className="text-zinc-500 text-sm mb-1">Good to see you back,</p>
-          <h1 className="font-syne text-3xl font-bold text-white">{user?.name} <span className="gradient-text">👋</span></h1>
+          <h1 className="font-syne text-2xl font-bold text-white break-words sm:text-3xl">{user?.name} <span className="gradient-text">👋</span></h1>
         </div>
         <Link href="/dashboard/expenses"
-          className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white transition-all hover:opacity-90"
+          className="flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-white transition-all hover:opacity-90 sm:w-auto"
           style={{ background: 'linear-gradient(135deg, rgb(99,102,241), rgb(139,92,246))' }}>
           <Receipt className="w-4 h-4" />
           Add Expense
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {statCard(<Wallet className="w-5 h-5" />, "Today's Spend", formatCurrency(summary?.today.total || 0), `${summary?.today.count || 0} transactions`, '#6366f1')}
         {statCard(<Calendar className="w-5 h-5" />, "This Week", formatCurrency(summary?.thisWeek.total || 0), `${summary?.thisWeek.count || 0} transactions`, '#8b5cf6')}
         {statCard(<TrendingUp className="w-5 h-5" />, "This Month", formatCurrency(summary?.thisMonth.total || 0), `${summary?.thisMonth.count || 0} transactions`, '#a78bfa')}
@@ -79,7 +79,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 rounded-2xl p-6" style={{ background: 'rgb(15,15,18)', border: '1px solid rgb(28,28,35)' }}>
+        <div className="min-w-0 rounded-2xl p-4 sm:p-6 lg:col-span-2" style={{ background: 'rgb(15,15,18)', border: '1px solid rgb(28,28,35)' }}>
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="font-syne font-bold text-white">Daily Spending</h2>
@@ -90,7 +90,7 @@ export default function DashboardPage() {
           {daily.length === 0 ? (
             <div className="flex items-center justify-center h-48 text-zinc-600 text-sm">No data yet</div>
           ) : (
-            <ResponsiveContainer width="100%" height={200}>
+            <ResponsiveContainer width="100%" height={220}>
               <BarChart data={daily} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                 <XAxis dataKey="date" tick={{ fill: '#52525b', fontSize: 11 }}
@@ -113,7 +113,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        <div className="rounded-2xl p-6" style={{ background: 'rgb(15,15,18)', border: '1px solid rgb(28,28,35)' }}>
+        <div className="min-w-0 rounded-2xl p-4 sm:p-6" style={{ background: 'rgb(15,15,18)', border: '1px solid rgb(28,28,35)' }}>
           <div className="mb-6">
             <h2 className="font-syne font-bold text-white">By Category</h2>
             <p className="text-xs text-zinc-500 mt-0.5">This month</p>
@@ -138,12 +138,12 @@ export default function DashboardPage() {
               </ResponsiveContainer>
               <div className="space-y-2 mt-3">
                 {byCategory.slice(0, 4).map((cat) => (
-                  <div key={cat.categoryId} className="flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-2">
+                  <div key={cat.categoryId} className="flex items-center justify-between gap-3 text-xs">
+                    <div className="flex min-w-0 items-center gap-2">
                       <div className="w-2 h-2 rounded-full" style={{ background: cat.color }} />
-                      <span className="text-zinc-400">{cat.name}</span>
+                      <span className="truncate text-zinc-400">{cat.name}</span>
                     </div>
-                    <span className="text-zinc-300 font-medium">{formatCurrency(cat.total)}</span>
+                    <span className="shrink-0 text-zinc-300 font-medium">{formatCurrency(cat.total)}</span>
                   </div>
                 ))}
               </div>
@@ -153,7 +153,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 rounded-2xl p-6" style={{ background: 'rgb(15,15,18)', border: '1px solid rgb(28,28,35)' }}>
+        <div className="min-w-0 rounded-2xl p-4 sm:p-6 lg:col-span-2" style={{ background: 'rgb(15,15,18)', border: '1px solid rgb(28,28,35)' }}>
           <div className="flex items-center justify-between mb-5">
             <h2 className="font-syne font-bold text-white">Recent Expenses</h2>
             <Link href="/dashboard/expenses" className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors">
@@ -170,7 +170,7 @@ export default function DashboardPage() {
           ) : (
             <div className="space-y-3">
               {recentExpenses.map((exp) => (
-                <div key={exp._id} className="flex items-center gap-4 p-3 rounded-xl transition-colors hover:bg-white/5">
+                <div key={exp._id} className="flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-white/5 sm:gap-4">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm shrink-0"
                     style={{ background: `${exp.categoryId?.color || '#6366f1'}20` }}>
                     <span>{exp.categoryId?.icon || '💸'}</span>
@@ -179,14 +179,14 @@ export default function DashboardPage() {
                     <div className="text-sm font-medium text-zinc-200 truncate">{exp.description}</div>
                     <div className="text-xs text-zinc-600">{formatDate(exp.date)}</div>
                   </div>
-                  <div className="text-sm font-semibold text-white shrink-0">{formatCurrency(exp.amount)}</div>
+                  <div className="shrink-0 text-right text-sm font-semibold text-white">{formatCurrency(exp.amount)}</div>
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        <div className="rounded-2xl p-6" style={{ background: 'rgb(15,15,18)', border: '1px solid rgb(28,28,35)' }}>
+        <div className="min-w-0 rounded-2xl p-4 sm:p-6" style={{ background: 'rgb(15,15,18)', border: '1px solid rgb(28,28,35)' }}>
           <div className="flex items-center gap-2 mb-5">
             <Sparkles className="w-4 h-4 text-indigo-400" />
             <h2 className="font-syne font-bold text-white">Insights</h2>

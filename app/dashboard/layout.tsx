@@ -35,9 +35,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   if (!user) return null;
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: 'rgb(8,8,10)' }}>
+    <div className="flex h-dvh overflow-hidden" style={{ background: 'rgb(8,8,10)' }}>
       <Sidebar />
-      <main className="flex-1 overflow-auto">
+      <main className="min-w-0 flex-1 overflow-auto pt-20 lg:pt-0">
         {children}
       </main>
     </div>

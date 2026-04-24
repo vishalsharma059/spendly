@@ -86,15 +86,15 @@ export default function RegisterPage() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-8"
+      className="flex min-h-screen items-center justify-center px-4 py-8 sm:p-8"
       style={{ background: "rgb(8,8,10)" }}
     >
-      <div className="w-full max-w-md space-y-8">
+      <div className="w-full max-w-md space-y-7 sm:space-y-8">
         <div className="text-center space-y-3">
           <div className="w-12 h-12 rounded-2xl bg-indigo-500 flex items-center justify-center mx-auto">
             <TrendingDown className="w-6 h-6 text-white" />
           </div>
-          <h2 className="font-syne text-3xl font-bold text-white">
+          <h2 className="font-syne text-2xl font-bold text-white sm:text-3xl">
             Create your account
           </h2>
           <p className="text-zinc-500">Start tracking your expenses for free</p>

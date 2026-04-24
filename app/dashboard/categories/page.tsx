@@ -116,11 +116,11 @@ function CategoryModal({ open, onClose, editingCategory }: CategoryModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-end justify-center p-3 sm:items-center sm:p-4"
       style={{ background: "rgba(0,0,0,0.8)" }}
     >
       <div
-        className="w-full max-w-md rounded-2xl p-6 space-y-5"
+        className="max-h-[calc(100dvh-1.5rem)] w-full max-w-md overflow-y-auto rounded-2xl p-4 space-y-5 sm:max-h-[calc(100dvh-2rem)] sm:p-6"
         style={{
           background: "rgb(15,15,18)",
           border: "1px solid rgb(38,38,50)",
@@ -172,13 +172,13 @@ function CategoryModal({ open, onClose, editingCategory }: CategoryModalProps) {
 
           <div className="space-y-2">
             <label className="text-xs font-medium text-zinc-400">Icon</label>
-            <div className="grid grid-cols-9 gap-1.5">
+            <div className="grid grid-cols-6 gap-1.5 min-[420px]:grid-cols-8 sm:grid-cols-9">
               {ICONS.map((icon) => (
                 <button
                   key={icon}
                   type="button"
                   onClick={() => setForm({ ...form, icon })}
-                  className="w-9 h-9 rounded-lg flex items-center justify-center text-lg transition-all"
+                  className="flex aspect-square w-full items-center justify-center rounded-lg text-lg transition-all"
                   style={{
                     background:
                       form.icon === icon ? `${form.color}25` : "rgb(25,25,30)",
@@ -277,7 +277,7 @@ export default function CategoriesPage() {
   };
 
   return (
-    <div className="p-8 space-y-6 max-w-7xl mx-auto">
+    <div className="mx-auto max-w-7xl space-y-6 px-4 pb-6 sm:px-6 lg:p-8">
       <CategoryModal
         open={modalOpen}
         onClose={() => {
@@ -287,9 +287,9 @@ export default function CategoriesPage() {
         editingCategory={editing}
       />
 
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="font-syne text-3xl font-bold text-white">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="font-syne text-2xl font-bold text-white sm:text-3xl">
             Categories
           </h1>
           <p className="text-zinc-500 text-sm mt-1">
@@ -301,7 +301,7 @@ export default function CategoriesPage() {
             setEditing(null);
             setModalOpen(true);
           }}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
+          className="flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90 sm:w-auto"
           style={{
             background:
               "linear-gradient(135deg, rgb(99,102,241), rgb(139,92,246))",
@@ -340,7 +340,7 @@ export default function CategoriesPage() {
           {categories.map((cat) => (
             <div
               key={cat._id}
-              className="group rounded-2xl p-5 flex flex-col gap-4 card-hover transition-all"
+              className="group rounded-2xl p-4 flex flex-col gap-4 card-hover transition-all sm:p-5"
               style={{
                 background: "rgb(15,15,18)",
                 border: "1px solid rgb(28,28,35)",
@@ -353,7 +353,7 @@ export default function CategoriesPage() {
                 >
                   {cat.icon}
                 </div>
-                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex gap-1 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
                   <button
                     onClick={() => {
                       setEditing(cat);

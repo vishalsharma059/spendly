@@ -30,7 +30,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex" style={{ background: "rgb(8,8,10)" }}>
       <div
-        className="hidden lg:flex w-1/2 flex-col justify-between p-16 relative overflow-hidden"
+        className="relative hidden w-1/2 min-w-[28rem] flex-col justify-between overflow-hidden p-10 xl:flex xl:p-16"
         style={{
           background:
             "linear-gradient(135deg, rgb(15,15,20) 0%, rgb(20,18,35) 100%)",
@@ -54,7 +54,7 @@ export default function LoginPage() {
           </div>
         </div>
         <div className="relative z-10 space-y-6">
-          <h1 className="font-syne text-5xl font-bold text-white leading-tight">
+          <h1 className="font-syne text-4xl font-bold leading-tight text-white 2xl:text-5xl">
             Take control of your
             <br />
             <span className="gradient-text">finances today</span>
@@ -83,8 +83,8 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-md space-y-8">
+      <div className="flex min-w-0 flex-1 items-center justify-center px-4 py-8 sm:p-8">
+        <div className="w-full max-w-md space-y-7 sm:space-y-8">
           <div className="space-y-2">
             <div className="flex items-center gap-2 lg:hidden mb-6">
               <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center">
@@ -94,7 +94,7 @@ export default function LoginPage() {
                 Spendly
               </span>
             </div>
-            <h2 className="font-syne text-3xl font-bold text-white">
+            <h2 className="font-syne text-2xl font-bold text-white sm:text-3xl">
               Welcome back
             </h2>
             <p className="text-zinc-500">Sign in to your expense tracker</p>

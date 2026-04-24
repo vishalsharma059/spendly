@@ -79,7 +79,7 @@ function SectionHeader({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-3 mb-6">
+    <div className="mb-6 flex min-w-0 items-center gap-3">
       <div
         className="w-9 h-9 rounded-xl flex items-center justify-center text-indigo-400"
         style={{
@@ -89,7 +89,7 @@ function SectionHeader({
       >
         {icon}
       </div>
-      <div>
+      <div className="min-w-0">
         <h2 className="font-syne font-bold text-white">{title}</h2>
         <p className="text-xs text-zinc-500">{subtitle}</p>
       </div>
@@ -152,23 +152,23 @@ export default function AnalyticsPage() {
   });
 
   return (
-    <div className="p-8 space-y-8 max-w-7xl mx-auto">
+    <div className="mx-auto max-w-7xl space-y-6 px-4 pb-6 sm:px-6 lg:space-y-8 lg:p-8">
       <div>
-        <h1 className="font-syne text-3xl font-bold text-white">Analytics</h1>
+        <h1 className="font-syne text-2xl font-bold text-white sm:text-3xl">Analytics</h1>
         <p className="text-zinc-500 text-sm mt-1">
           Analyze your spending patterns and trends
         </p>
       </div>
 
       <div
-        className="flex flex-wrap items-center gap-3 p-4 rounded-2xl"
+        className="flex flex-col items-stretch gap-3 rounded-2xl p-4 sm:flex-row sm:flex-wrap sm:items-center"
         style={{
           background: "rgb(15,15,18)",
           border: "1px solid rgb(28,28,35)",
         }}
       >
         <Calendar className="w-4 h-4 text-zinc-500" />
-        <div className="flex gap-2">
+        <div className="grid grid-cols-3 gap-2 sm:flex">
           {PRESET_RANGES.map(({ label, days }) => (
             <button
               key={days}
@@ -185,23 +185,23 @@ export default function AnalyticsPage() {
             </button>
           ))}
         </div>
-        <div className="flex-1 flex items-center gap-2">
+        <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center">
           <input
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="px-3 py-1.5 rounded-lg text-xs text-white bg-zinc-900 border border-zinc-800 focus:border-indigo-500 outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs text-white outline-none focus:border-indigo-500 sm:w-auto sm:py-1.5"
           />
-          <span className="text-zinc-600 text-xs">to</span>
+          <span className="hidden text-zinc-600 text-xs sm:inline">to</span>
           <input
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="px-3 py-1.5 rounded-lg text-xs text-white bg-zinc-900 border border-zinc-800 focus:border-indigo-500 outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs text-white outline-none focus:border-indigo-500 sm:w-auto sm:py-1.5"
           />
           <button
             onClick={applyCustom}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium text-indigo-400 border border-indigo-500/30 hover:bg-indigo-500/10 transition-colors"
+            className="rounded-lg border border-indigo-500/30 px-3 py-2 text-xs font-medium text-indigo-400 transition-colors hover:bg-indigo-500/10 sm:py-1.5"
           >
             Apply
           </button>
@@ -209,7 +209,7 @@ export default function AnalyticsPage() {
         {loading && <Loader2 className="w-4 h-4 animate-spin text-zinc-500" />}
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
           {
             label: "Total Spend",
@@ -238,7 +238,7 @@ export default function AnalyticsPage() {
         ].map(({ label, value, icon, color }) => (
           <div
             key={label}
-            className="rounded-2xl p-4"
+            className="min-w-0 rounded-2xl p-4"
             style={{
               background: "rgb(15,15,18)",
               border: "1px solid rgb(28,28,35)",
@@ -253,7 +253,7 @@ export default function AnalyticsPage() {
               </div>
               <span className="text-xs text-zinc-500">{label}</span>
             </div>
-            <div className="font-syne text-xl font-bold text-white">
+            <div className="font-syne text-xl font-bold text-white break-words">
               {value}
             </div>
           </div>
@@ -261,7 +261,7 @@ export default function AnalyticsPage() {
       </div>
 
       <div
-        className="rounded-2xl p-6"
+        className="min-w-0 rounded-2xl p-4 sm:p-6"
         style={{
           background: "rgb(15,15,18)",
           border: "1px solid rgb(28,28,35)",
@@ -336,7 +336,7 @@ export default function AnalyticsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div
-          className="rounded-2xl p-6"
+          className="min-w-0 rounded-2xl p-4 sm:p-6"
           style={{
             background: "rgb(15,15,18)",
             border: "1px solid rgb(28,28,35)",
@@ -352,8 +352,9 @@ export default function AnalyticsPage() {
               No data
             </div>
           ) : (
-            <div className="flex gap-4">
-              <ResponsiveContainer width="50%" height={200}>
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <div className="h-[200px] w-full sm:w-1/2">
+                <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={byCategory}
@@ -373,14 +374,15 @@ export default function AnalyticsPage() {
                     formatter={(v: any) => [formatCurrency(v), ""]}
                   />
                 </PieChart>
-              </ResponsiveContainer>
+                </ResponsiveContainer>
+              </div>
               <div className="flex-1 space-y-3 self-center">
                 {byCategory.map((cat) => (
                   <div key={cat.categoryId} className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="flex items-center gap-1.5 text-zinc-300">
+                      <span className="flex min-w-0 items-center gap-1.5 text-zinc-300">
                         <span>{cat.icon}</span>
-                        {cat.name}
+                        <span className="truncate">{cat.name}</span>
                       </span>
                       <span className="text-zinc-400 font-medium">
                         {((cat.total / totalSpend) * 100).toFixed(0)}%
@@ -403,7 +405,7 @@ export default function AnalyticsPage() {
         </div>
 
         <div
-          className="rounded-2xl p-6"
+          className="min-w-0 rounded-2xl p-4 sm:p-6"
           style={{
             background: "rgb(15,15,18)",
             border: "1px solid rgb(28,28,35)",
@@ -453,7 +455,7 @@ export default function AnalyticsPage() {
 
       {insights.length > 0 && (
         <div
-          className="rounded-2xl p-6"
+          className="rounded-2xl p-4 sm:p-6"
           style={{
             background: "rgb(15,15,18)",
             border: "1px solid rgb(28,28,35)",

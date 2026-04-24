@@ -117,11 +117,22 @@
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-width: 0;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
   }
 
   h1,
@@ -194,5 +205,13 @@
     border-radius: inherit;
     background: linear-gradient(135deg, var(--accent), var(--accent-2));
     z-index: -1;
+  }
+}
+
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
   }
 }
