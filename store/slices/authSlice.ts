@@ -1,7 +1,11 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { authApi } from '../../lib/api';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { authApi } from "../../lib/api";
 
-interface User { id: string; name: string; email: string }
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
 
 interface AuthState {
   user: User | null;
@@ -13,40 +17,43 @@ interface AuthState {
 const initialState: AuthState = {
   user: null,
   token: null,
-  loading: true,
+  loading: false,
   error: null,
 };
 
 export const loginThunk = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (creds: { email: string; password: string }, { rejectWithValue }) => {
     try {
       return await authApi.login(creds);
     } catch (e: any) {
       return rejectWithValue(e.message);
     }
-  }
+  },
 );
 
 export const registerThunk = createAsyncThunk(
-  'auth/register',
-  async (data: { name: string; email: string; password: string }, { rejectWithValue }) => {
+  "auth/register",
+  async (
+    data: { name: string; email: string; password: string },
+    { rejectWithValue },
+  ) => {
     try {
       return await authApi.register(data);
     } catch (e: any) {
       return rejectWithValue(e.message);
     }
-  }
+  },
 );
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     initAuth(state) {
-      if (typeof window !== 'undefined') {
-        const token = localStorage.getItem('spendly_token');
-        const user = localStorage.getItem('spendly_user');
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("spendly_token");
+        const user = localStorage.getItem("spendly_user");
         if (token && user) {
           state.token = token;
           state.user = JSON.parse(user);
@@ -57,9 +64,9 @@ const authSlice = createSlice({
     logout(state) {
       state.user = null;
       state.token = null;
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('spendly_token');
-        localStorage.removeItem('spendly_user');
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("spendly_token");
+        localStorage.removeItem("spendly_user");
       }
     },
     clearError(state) {
@@ -67,24 +74,42 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    const handleAuth = (state: AuthState, action: PayloadAction<{ token: string; user: User }>) => {
+    const handleAuth = (
+      state: AuthState,
+      action: PayloadAction<{ token: string; user: User }>,
+    ) => {
       state.loading = false;
       state.error = null;
       state.token = action.payload.token;
       state.user = action.payload.user;
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('spendly_token', action.payload.token);
-        localStorage.setItem('spendly_user', JSON.stringify(action.payload.user));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("spendly_token", action.payload.token);
+        localStorage.setItem(
+          "spendly_user",
+          JSON.stringify(action.payload.user),
+        );
       }
     };
 
     builder
-      .addCase(loginThunk.pending, (s) => { s.loading = true; s.error = null; })
+      .addCase(loginThunk.pending, (s) => {
+        s.loading = true;
+        s.error = null;
+      })
       .addCase(loginThunk.fulfilled, handleAuth)
-      .addCase(loginThunk.rejected, (s, a) => { s.loading = false; s.error = a.payload as string; })
-      .addCase(registerThunk.pending, (s) => { s.loading = true; s.error = null; })
+      .addCase(loginThunk.rejected, (s, a) => {
+        s.loading = false;
+        s.error = a.payload as string;
+      })
+      .addCase(registerThunk.pending, (s) => {
+        s.loading = true;
+        s.error = null;
+      })
       .addCase(registerThunk.fulfilled, handleAuth)
-      .addCase(registerThunk.rejected, (s, a) => { s.loading = false; s.error = a.payload as string; });
+      .addCase(registerThunk.rejected, (s, a) => {
+        s.loading = false;
+        s.error = a.payload as string;
+      });
   },
 });
 
