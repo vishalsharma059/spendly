@@ -46,6 +46,23 @@ export const authApi = {
     apiCall<{ id: string; name: string; email: string }>("/auth/profile", {
       token,
     }),
+
+  forgotPassword: (body: { email: string }) =>
+    apiCall<{ success: boolean; message: string }>("/auth/forgot-password", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+
+  validateResetToken: (token: string) =>
+    apiCall<{ success: boolean; message: string }>(
+      `/auth/reset-password/validate?token=${encodeURIComponent(token)}`,
+    ),
+
+  resetPassword: (body: { token: string; newPassword: string }) =>
+    apiCall<{ success: boolean; message: string }>("/auth/reset-password", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
 };
 
 export interface Category {
