@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -20,9 +20,14 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [isClient, setIsClient] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { loading, error } = useAppSelector((s) => s.auth);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const inputStyle = {
     background: "rgb(20,20,25)",
@@ -145,7 +150,7 @@ export default function RegisterPage() {
                 "linear-gradient(135deg, rgb(99,102,241), rgb(139,92,246))",
             }}
           >
-            {loading ? (
+            {isClient && loading ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
               <>
