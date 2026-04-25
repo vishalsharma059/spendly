@@ -17,7 +17,7 @@ interface AuthState {
 const initialState: AuthState = {
   user: null,
   token: null,
-  loading: false,
+  loading: true,
   error: null,
 };
 
@@ -55,8 +55,15 @@ const authSlice = createSlice({
         const token = localStorage.getItem("spendly_token");
         const user = localStorage.getItem("spendly_user");
         if (token && user) {
-          state.token = token;
-          state.user = JSON.parse(user);
+          try {
+            state.token = token;
+            state.user = JSON.parse(user);
+          } catch {
+            state.token = null;
+            state.user = null;
+            localStorage.removeItem("spendly_token");
+            localStorage.removeItem("spendly_user");
+          }
         }
       }
       state.loading = false;
